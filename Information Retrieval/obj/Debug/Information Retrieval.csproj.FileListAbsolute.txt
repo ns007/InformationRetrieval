@@ -1,0 +1,10 @@
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\bin\Debug\Information Retrieval.exe.config
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\bin\Debug\Information Retrieval.exe
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\bin\Debug\Information Retrieval.pdb
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\obj\Debug\Information Retrieval.csprojResolveAssemblyReference.cache
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\obj\Debug\Information_Retrieval.Form1.resources
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\obj\Debug\Information_Retrieval.Properties.Resources.resources
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\obj\Debug\Information Retrieval.csproj.GenerateResource.Cache
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\obj\Debug\Information Retrieval.exe
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\obj\Debug\Information Retrieval.pdb
+F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\bin\Debug\MySql.Data.dll
