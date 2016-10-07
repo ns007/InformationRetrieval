@@ -1,13 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Information_Retrieval
@@ -62,18 +59,20 @@ namespace Information_Retrieval
 
         private void saveFileInDB(string fileText , string fileName)
         {
+            string queryString;
+            MySqlCommand cmd;
             if (DbConn.connect_to_MySQL() == true)
             {
-                DbConn.conn.Close();
+                //DbConn.conn.Close();
                 //string text = System.IO.File.ReadAllText(@"C:\Users\netanels\Desktop\לימודים\פרויקט איחזור מידע\DOCS\Daniel7.txt");
                 char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n', ';', '?' ,'\r' };
 
                 List<string> words = new List<string>();
                 words = fileText.ToLower().Split(delimiterChars).ToList<string>();
-                
+
                 //MessageBox.Show(words[21].ToString());
                 //words.Remove(" ");
-
+                int fileID = GetFileID(DbConn.conn,fileName);
                 Dictionary<string, int> dictionary = new Dictionary<string, int>();
                 foreach (string word in words)
                 {
@@ -88,19 +87,19 @@ namespace Information_Retrieval
                         dictionary.Add(word, 1);
                     }
                 }
-                
-                foreach(KeyValuePair<string, int> entry in dictionary)
+               
+                foreach (KeyValuePair<string, int> entry in dictionary)
                 {
                     string EZ_filePath = "'" + fileName + "'";
                     string EZ_word = "'" + entry.Key.Replace("'","\\'") + "'";
                     
                     if (checkIfExsit(fileName,entry.Key)) // function that check the key in the database
                         continue;
-                    string queryString = "INSERT INTO info_retrieval_db.words_tbl (file,word,count) VALUES" + "(" + EZ_filePath + "," + EZ_word + "," + entry.Value + ");" ;
+                    queryString = "INSERT INTO info_retrieval_db.words_tbl (file,word,count) VALUES" + "(" + EZ_filePath + "," + EZ_word + "," + entry.Value + ");" ;
                     try
                     {
-                        DbConn.conn.Open();
-                        MySqlCommand cmd = new MySqlCommand(queryString,DbConn.conn);
+                        //DbConn.conn.Open();
+                        cmd = new MySqlCommand(queryString,DbConn.conn);
                         cmd.ExecuteNonQuery();
 
                     }
@@ -108,13 +107,74 @@ namespace Information_Retrieval
                     {
                         MessageBox.Show(ex.ToString());
                     }
-                    finally
+                }
+
+                Dictionary<string, HashSet<int>> wordsFiles = new Dictionary<string, HashSet<int>>();
+                queryString = "SELECT * FROM info_retrieval_db.words_files;"; 
+                cmd = new MySqlCommand(queryString, DbConn.conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
                     {
-                        if (DbConn.conn != null)
+                        string files = reader["files"].ToString();
+                        HashSet<int> filesOfWords = new HashSet<int>();
+                        foreach (string s in files.Split(','))
                         {
-                            DbConn.conn.Close();
+                            filesOfWords.Add(Int32.Parse(s));
+                        }
+                        wordsFiles.Add(reader["word"].ToString(), filesOfWords);
+                    }
+                    reader.Close();
+                }
+
+                foreach (KeyValuePair<string, int> entry in dictionary)
+                {
+                    if (wordsFiles.ContainsKey(entry.Key))
+                    {
+                        HashSet<int> filesID = wordsFiles[entry.Key];
+                        if (!filesID.Contains(fileID))
+                        {
+                            StringBuilder filesString = new StringBuilder();
+                            foreach(int i in filesID)
+                            {
+                                filesString.Append(i + ",");
+                            }
+                            filesString.Append(fileID);
+                            queryString = "UPDATE info_retrieval_db.words_files SET files = '"
+                                + filesString.ToString() + "' WHERE word = '" + entry.Key + "';";
+                            try
+                            {
+                                cmd = new MySqlCommand(queryString, DbConn.conn);
+                                cmd.ExecuteNonQuery();
+                            }
+                            catch (MySqlException ex)
+                            {
+                                MessageBox.Show(queryString);
+                                MessageBox.Show(ex.ToString());
+                            }
                         }
                     }
+                    else
+                    {
+                        reader.Close();
+                        queryString = "INSERT INTO info_retrieval_db.words_files (word,files) VALUES" + "('" + entry.Key.Replace("'","\\'") + "','" + fileID + "');";
+                        try
+                        {
+                            //DbConn.conn.Open();
+                            cmd = new MySqlCommand(queryString, DbConn.conn);
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (MySqlException ex)
+                        {
+                            MessageBox.Show(ex.ToString());
+                        }
+                    }
+                }
+                if (DbConn.conn != null)
+                {
+                    DbConn.conn.Close();
                 }
                 MessageBox.Show("קובץ נקלט בהצלחה");
                 //StringHelper z = new StringHelper();
@@ -126,32 +186,82 @@ namespace Information_Retrieval
             }
         }
 
+        private int GetFileID(MySqlConnection conn, string fileName)
+        {
+            int fileID = -1;
+            string queryString = "SELECT * FROM info_retrieval_db.files WHERE filename = " + "'" + fileName + "';";
+            try
+            {
+                //DbConn.conn.Open();
+                MySqlCommand cmd = new MySqlCommand(queryString, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    fileID = reader.GetInt32("id");
+                }
+                else
+                {
+                    reader.Close();
+                    queryString = "INSERT INTO info_retrieval_db.files (filename) VALUES" + "('" + fileName + "');";
+                    try
+                    {
+                        //DbConn.conn.Open();
+                        cmd = new MySqlCommand(queryString,conn);
+                        cmd.ExecuteNonQuery();
+                        queryString = "SELECT * FROM info_retrieval_db.files WHERE filename = " + "'" + fileName + "';";
+                        cmd = new MySqlCommand(queryString, conn);
+                        reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            fileID = reader.GetInt32("id");
+                        }
+                        reader.Close();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        return fileID;
+                    }
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                return -1;
+            }
+            //finally
+            //{
+            //    if (DbConn.conn != null)
+            //    {
+            //        DbConn.conn.Close();
+            //    }
+            //}
+            return fileID;
+        }
 
         private bool checkIfExsit(string filePath, string key)
         {
             string queryString = "SELECT * FROM info_retrieval_db.words_tbl WHERE file = " + "'" + filePath  + "'" + "AND word = " + "'" + key + "'" + ";" ;
             try
             {
-                DbConn.conn.Open();
+                //DbConn.conn.Open();
                 MySqlCommand cmd = new MySqlCommand(queryString, DbConn.conn);
                 MySqlDataReader reader =  cmd.ExecuteReader();
                 if (reader.HasRows)
+                {
+                    reader.Close();
                     return true;
+                }
                 else
+                {
+                    reader.Close();
                     return false;
-
+                }
             }
             catch (MySqlException ex)
             {
                 return false;
-            }
-            finally
-            {
-                if (DbConn.conn != null)
-                {
-                    DbConn.conn.Close();
-                }
-
             }
         }
 

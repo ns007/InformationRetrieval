@@ -8,3 +8,13 @@ F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Informat
 F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\obj\Debug\Information Retrieval.exe
 F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\obj\Debug\Information Retrieval.pdb
 F:\לימודים\שנה ג\איחזור מידע\Information Retrieval\Information Retrieval\bin\Debug\MySql.Data.dll
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\bin\Debug\Information Retrieval.exe.config
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.exe
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.pdb
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\bin\Debug\Information Retrieval.exe
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\bin\Debug\Information Retrieval.pdb
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\bin\Debug\MySql.Data.dll
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.csprojResolveAssemblyReference.cache
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Form1.resources
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Properties.Resources.resources
+F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.csproj.GenerateResource.Cache
