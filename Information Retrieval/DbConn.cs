@@ -11,12 +11,12 @@ namespace Information_Retrieval
     {
         public static MySqlConnection conn;
         public static string connectionString;
-        public static string username = "ns007";
-        public static string password = "nis135790"; 
+        public static string username = "ysapir";
+        public static string password = "password"; 
         public static string ipAddress = "localhost";
 
 
-        public static bool connect_to_MySQL()
+        public static MySqlConnection connect_to_MySQL()
         {
             try
             {
@@ -26,11 +26,11 @@ namespace Information_Retrieval
                 DbConn.conn = new MySqlConnection(connectionString);
                 DbConn.conn.Open();
 
-                return true;
+                return conn;
             }
             catch (Exception ex)
             {
-                return false;
+                return conn;
             }
         }
     }

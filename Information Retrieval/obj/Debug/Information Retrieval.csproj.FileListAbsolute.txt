@@ -18,3 +18,12 @@ F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retriev
 F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Form1.resources
 F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Properties.Resources.resources
 F:\visual stuido project\GitHub Project\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.csproj.GenerateResource.Cache
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\bin\Debug\Information Retrieval.exe.config
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.exe
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.pdb
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\bin\Debug\Information Retrieval.exe
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\bin\Debug\Information Retrieval.pdb
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.csprojResolveAssemblyReference.cache
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Form1.resources
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Properties.Resources.resources
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information Retrieval.csproj.GenerateResource.Cache
