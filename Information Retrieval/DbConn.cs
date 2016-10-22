@@ -11,10 +11,14 @@ namespace Information_Retrieval
     {
         public static MySqlConnection conn;
         public static string connectionString;
-        public static string username = "ysapir";
-        public static string password = "password"; 
+        //yaniv conn
+        //public static string username = "ysapir";
+        //public static string password = "password"; 
+        //public static string ipAddress = "localhost";
+        //newtanel conn
+        public static string username = "ns007";
+        public static string password = "nis135790";
         public static string ipAddress = "localhost";
-
 
         public static MySqlConnection connect_to_MySQL()
         {

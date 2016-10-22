@@ -13,7 +13,11 @@ namespace Information_Retrieval
 {
     public partial class Form1 : Form
     {
-        private const string dicName = @"C:\info_ret\";
+        //yaniv path//
+        //private const string dicName = @"C:\info_ret\";
+        //netanel path//
+        private const string dicName = @"F:\לימודים\שנה ג\איחזור מידע\DOCS\";
+
         private MySqlConnection conn = DbConn.connect_to_MySQL();
         //int x = 3; 
         public Form1()
@@ -363,7 +367,10 @@ namespace Information_Retrieval
             LinkLabel lnk = new LinkLabel();
             lnk = (LinkLabel)sender;
             lnk.Links[lnk.Links.IndexOf(e.Link)].Visited = true;
-            System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
+            string[] test = new string[] { "before" };
+            Form2 form2 = new Form2(e.Link.LinkData.ToString(), test);
+            form2.ShowDialog();
+            //System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
         }
 
         private void יציאהToolStripMenuItem_Click(object sender, EventArgs e)
