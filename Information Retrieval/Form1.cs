@@ -14,15 +14,23 @@ namespace Information_Retrieval
     public partial class Form1 : Form
     {
         //yaniv path//
-        //private const string dicName = @"C:\info_ret\";
+        private const string dicName = @"C:\info_ret\";
         //netanel path//
-        private const string dicName = @"F:\לימודים\שנה ג\איחזור מידע\DOCS\";
+        ////private const string dicName = @"F:\לימודים\שנה ג\איחזור מידע\DOCS\";
 
         private MySqlConnection conn = DbConn.connect_to_MySQL();
         //int x = 3; 
+
+        ISet<string> operands = new HashSet<string>();
+        ISet<string> notOperands = new HashSet<string>();
         public Form1()
         {
             InitializeComponent();
+            operands.Add("AND");
+            operands.Add("OR");
+            operands.Add("NOT");
+            operands.Add("(");
+            operands.Add(")");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -281,13 +289,6 @@ namespace Information_Retrieval
             query = query.Replace("(", "( ");
             query = query.Replace(")", " )");
             string[] splitedquery = query.Split(' ');
-            ISet<string> operands = new HashSet<string>();
-            operands.Add("AND");
-            operands.Add("OR");
-            operands.Add("NOT");
-            operands.Add("(");
-            operands.Add(")");
-
             IDictionary<string, IDictionary<string, int>> fileWords = getFilesWords();
 
             DataTable dt = new DataTable();
@@ -299,6 +300,7 @@ namespace Information_Retrieval
                     if (!operands.Contains(word))
                     {
                         result.Append(fileWords[fileName].ContainsKey(word) + " ");
+                        notOperands.Add(word);
                     }
                     else
                     {
@@ -326,7 +328,23 @@ namespace Information_Retrieval
                 l.Size = new Size(784, 25);
                 l.Links.Add(0, l.Text.ToString().Length, finalPath);
                 l.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(openTextFile);
-                tip.SetToolTip(l, "The word appare " + "XX" + "times in the file " );
+                // tokens: {"before":24, "after":}
+                StringBuilder sb = new StringBuilder();
+                int i = 0;
+                int appearances = 0;
+                sb.Append("Word Appearances Countings:\n\n");
+                foreach (string word in notOperands)
+                {
+                    try {
+                        appearances = fileWords[filename][word];
+                    }
+                    catch (KeyNotFoundException knfe)
+                    {
+                        appearances = 0;
+                    }
+                    sb.Append("-" + word + ":\t" + appearances + "\n");
+                }
+                tip.SetToolTip(l,  sb.ToString());
                 lbl_intro.Text = s.ReadLine();
                 lbl_intro.Location = new System.Drawing.Point(0, 30);
                 lbl_intro.Size = new Size(784, 30);
@@ -370,7 +388,7 @@ namespace Information_Retrieval
             LinkLabel lnk = new LinkLabel();
             lnk = (LinkLabel)sender;
             lnk.Links[lnk.Links.IndexOf(e.Link)].Visited = true;
-            string[] test = new string[] { txt_search.Text }; // need to send array of all the words we search
+            string[] test = notOperands.ToArray(); // need to send array of all the words we search
             Form2 form2 = new Form2(e.Link.LinkData.ToString(), test);
             form2.ShowDialog();
             //System.Diagnostics.Process.Start(e.Link.LinkData.ToString());

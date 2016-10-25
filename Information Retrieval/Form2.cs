@@ -17,31 +17,51 @@ namespace Information_Retrieval
         private string textFile;
         private string _path;
         private string[] words;
+        List<Color> colors = new List<Color>();
 
         public Form2(string path,string[] serachWords)
         {
             InitializeComponent();
             _path = path;
             textFile = File.ReadAllText(path);
+            textFile = textFile.Replace("\n", "");
             words = serachWords;
+            colors.Add(Color.Blue);
+            colors.Add(Color.Red);
+            colors.Add(Color.Green);
+            colors.Add(Color.Purple);
+            colors.Add(Color.RosyBrown);
+            colors.Add(Color.Orange);
+            colors.Add(Color.Turquoise);
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
             rt_text.Text = textFile;
-            foreach (string word in words)  
+            int i = 0;
+            foreach (string word in words)
             {
-                foreach (string line in rt_text.Lines)
+                foreach (int num in AllIndexesOf(textFile, word))
                 {
-
-                    //if (line.Split(' ').Contains(word))
-                    if (line.IndexOf(word.Trim()) != -1)
-                    {
-                        int srt = rt_text.Find(word);
-                        rt_text.Select(srt, word.Length);
-                        rt_text.SelectionFont = new Font(rt_text.Font, FontStyle.Bold);
-                    }
+                    rt_text.Select(num, word.Length);
+                    rt_text.SelectionFont = new Font(rt_text.Font, FontStyle.Bold);
+                    rt_text.SelectionColor = colors[i];
                 }
+                i++;
+            }
+        }
+
+        public List<int> AllIndexesOf(string str, string value)
+        {
+            if (String.IsNullOrEmpty(value))
+                throw new ArgumentException("the string to find may not be empty", "value");
+            List<int> indexes = new List<int>();
+            for (int index = 0; ; index += value.Length)
+            {
+                index = str.IndexOf(value, index);
+                if (index == -1)
+                    return indexes;
+                indexes.Add(index);
             }
         }
 
