@@ -31,9 +31,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lbl_header = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btn_back = new System.Windows.Forms.Button();
             this.btn_print = new System.Windows.Forms.Button();
+            this.btn_back = new System.Windows.Forms.Button();
             this.rt_text = new System.Windows.Forms.RichTextBox();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -67,15 +69,6 @@
             this.panel2.Size = new System.Drawing.Size(784, 36);
             this.panel2.TabIndex = 2;
             // 
-            // btn_back
-            // 
-            this.btn_back.Location = new System.Drawing.Point(697, 6);
-            this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(75, 23);
-            this.btn_back.TabIndex = 3;
-            this.btn_back.Text = "חזור";
-            this.btn_back.UseVisualStyleBackColor = true;
-            // 
             // btn_print
             // 
             this.btn_print.Location = new System.Drawing.Point(616, 6);
@@ -84,6 +77,17 @@
             this.btn_print.TabIndex = 4;
             this.btn_print.Text = "הדפס";
             this.btn_print.UseVisualStyleBackColor = true;
+            this.btn_print.Click += new System.EventHandler(this.btn_print_Click);
+            // 
+            // btn_back
+            // 
+            this.btn_back.Location = new System.Drawing.Point(697, 6);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(75, 23);
+            this.btn_back.TabIndex = 3;
+            this.btn_back.Text = "חזור";
+            this.btn_back.UseVisualStyleBackColor = true;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
             // rt_text
             // 
@@ -92,6 +96,16 @@
             this.rt_text.Size = new System.Drawing.Size(760, 304);
             this.rt_text.TabIndex = 3;
             this.rt_text.Text = "";
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.Document = this.printDocument1;
+            this.printDialog1.UseEXDialog = true;
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.BeginPrint += new System.Drawing.Printing.PrintEventHandler(this.printDocument1_BeginPrint);
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.OnPrintPage);
             // 
             // Form2
             // 
@@ -123,5 +137,7 @@
         private System.Windows.Forms.Button btn_print;
         private System.Windows.Forms.Button btn_back;
         private System.Windows.Forms.RichTextBox rt_text;
+        private System.Windows.Forms.PrintDialog printDialog1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }

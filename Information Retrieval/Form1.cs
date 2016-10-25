@@ -274,7 +274,7 @@ namespace Information_Retrieval
 
         private void btn_search_Click(object sender, EventArgs e)
         {
-          
+            panel2.Controls.Clear();
             string query = txt_search.Text.Trim();
             ISet<string> filenames = new HashSet<string>();
 
@@ -310,7 +310,6 @@ namespace Information_Retrieval
                     filenames.Add(fileName);
                 }
 
-                
                 //Console.WriteLine(filenames);
                 //Console.WriteLine("hey");
             }
@@ -318,15 +317,19 @@ namespace Information_Retrieval
             {
                 string finalPath = dicName + filename;
                 Panel p = new Panel();
+                ToolTip tip = new ToolTip();
+                p.Size = new Size(784, 60);
                 LinkLabel l = new LinkLabel();
                 Label lbl_intro = new Label();
                 StreamReader s = new StreamReader(finalPath);
                 l.Text = filename.ToUpper();
+                l.Size = new Size(784, 25);
                 l.Links.Add(0, l.Text.ToString().Length, finalPath);
                 l.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(openTextFile);
+                tip.SetToolTip(l, "The word appare " + "XX" + "times in the file " );
                 lbl_intro.Text = s.ReadLine();
-                l.Size = new Size(85, 25);
-                lbl_intro.Size = new Size(200, 30);
+                lbl_intro.Location = new System.Drawing.Point(0, 30);
+                lbl_intro.Size = new Size(784, 30);
                 p.Controls.Add(l);
                 p.Controls.Add(lbl_intro);
                 panel2.Controls.Add(p);
@@ -367,7 +370,7 @@ namespace Information_Retrieval
             LinkLabel lnk = new LinkLabel();
             lnk = (LinkLabel)sender;
             lnk.Links[lnk.Links.IndexOf(e.Link)].Visited = true;
-            string[] test = new string[] { "before" };
+            string[] test = new string[] { txt_search.Text }; // need to send array of all the words we search
             Form2 form2 = new Form2(e.Link.LinkData.ToString(), test);
             form2.ShowDialog();
             //System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
