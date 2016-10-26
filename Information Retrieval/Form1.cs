@@ -23,6 +23,7 @@ namespace Information_Retrieval
 
         ISet<string> operands = new HashSet<string>();
         ISet<string> notOperands = new HashSet<string>();
+        ISet<string> stopList = new HashSet<string>();
         public Form1()
         {
             InitializeComponent();
@@ -31,6 +32,15 @@ namespace Information_Retrieval
             operands.Add("NOT");
             operands.Add("(");
             operands.Add(")");
+
+            stopList.Add("that");
+            stopList.Add("end");
+            stopList.Add("for");
+            stopList.Add("a");
+            stopList.Add("the");
+            stopList.Add("an");
+            stopList.Add("like");
+            stopList.Add("as");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -78,7 +88,7 @@ namespace Information_Retrieval
             MySqlCommand cmd;
             if (conn != null)
             {
-                //conn.Close();
+                //conn.Open();
                 //string text = System.IO.File.ReadAllText(@"C:\Users\netanels\Desktop\לימודים\פרויקט איחזור מידע\DOCS\Daniel7.txt");
                 char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n', ';', '?' ,'\r' };
 
@@ -187,10 +197,10 @@ namespace Information_Retrieval
                         }
                     }
                 }
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                //if (conn != null)
+                //{
+                //    conn.Close();
+                //}
                 MessageBox.Show("קובץ נקלט בהצלחה");
                 //StringHelper z = new StringHelper();
             }
@@ -214,6 +224,7 @@ namespace Information_Retrieval
                 {
                     reader.Read();
                     fileID = reader.GetInt32("id");
+                    reader.Close();
                 }
                 else
                 {
@@ -290,12 +301,26 @@ namespace Information_Retrieval
             query = query.Replace(")", " )");
             string[] splitedquery = query.Split(' ');
             IDictionary<string, IDictionary<string, int>> fileWords = getFilesWords();
-
+            List<string> list = new List<string>(query.Split(' '));
+            for(int i = 0; i < list.Count; i++)
+            {
+                if (stopList.Contains(list[i]))
+                {
+                    if(i != 0)
+                    {
+                        list.Remove(list[i - 1]);
+                        list.Remove(list[i - 1]);
+                    }else
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
             DataTable dt = new DataTable();
             foreach (string fileName in fileWords.Keys)
             {
                 StringBuilder result = new StringBuilder();
-                foreach (string word in splitedquery)
+                foreach (string word in list)
                 {
                     if (!operands.Contains(word))
                     {
@@ -307,6 +332,10 @@ namespace Information_Retrieval
                         result.Append(word + " ");
                     }
                 }
+                if (result.ToString().Equals(""))
+                {
+                    result.Append("false");
+                }
                 if ((bool)dt.Compute(result.ToString(), ""))
                 {
                     filenames.Add(fileName);
@@ -317,40 +346,55 @@ namespace Information_Retrieval
             }
             foreach(string filename in filenames)
             {
-                string finalPath = dicName + filename;
-                Panel p = new Panel();
-                ToolTip tip = new ToolTip();
-                p.Size = new Size(784, 60);
-                LinkLabel l = new LinkLabel();
-                Label lbl_intro = new Label();
-                StreamReader s = new StreamReader(finalPath);
-                l.Text = filename.ToUpper();
-                l.Size = new Size(784, 25);
-                l.Links.Add(0, l.Text.ToString().Length, finalPath);
-                l.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(openTextFile);
-                // tokens: {"before":24, "after":}
-                StringBuilder sb = new StringBuilder();
-                int i = 0;
-                int appearances = 0;
-                sb.Append("Word Appearances Countings:\n\n");
-                foreach (string word in notOperands)
+                string queryString = "SELECT * FROM info_retrieval_db.files WHERE filename = " + "'" + filename + "';";
+                MySqlCommand cmd = new MySqlCommand(queryString, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                bool isActive = false;
+                if (reader.HasRows)
                 {
-                    try {
-                        appearances = fileWords[filename][word];
-                    }
-                    catch (KeyNotFoundException knfe)
-                    {
-                        appearances = 0;
-                    }
-                    sb.Append("-" + word + ":\t" + appearances + "\n");
+                    reader.Read();
+                    isActive = Boolean.Parse(reader["active"].ToString());
+                    reader.Close();
                 }
-                tip.SetToolTip(l,  sb.ToString());
-                lbl_intro.Text = s.ReadLine();
-                lbl_intro.Location = new System.Drawing.Point(0, 30);
-                lbl_intro.Size = new Size(784, 30);
-                p.Controls.Add(l);
-                p.Controls.Add(lbl_intro);
-                panel2.Controls.Add(p);
+
+                if (isActive)
+                {
+                    string finalPath = dicName + filename;
+                    Panel p = new Panel();
+                    ToolTip tip = new ToolTip();
+                    p.Size = new Size(784, 60);
+                    LinkLabel l = new LinkLabel();
+                    Label lbl_intro = new Label();
+                    StreamReader s = new StreamReader(finalPath);
+                    l.Text = filename.ToUpper();
+                    l.Size = new Size(784, 25);
+                    l.Links.Add(0, l.Text.ToString().Length, finalPath);
+                    l.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(openTextFile);
+                    // tokens: {"before":24, "after":}
+                    StringBuilder sb = new StringBuilder();
+                    int i = 0;
+                    int appearances = 0;
+                    sb.Append("Word Appearances Countings:\n\n");
+                    foreach (string word in notOperands)
+                    {
+                        try
+                        {
+                            appearances = fileWords[filename][word];
+                        }
+                        catch (KeyNotFoundException knfe)
+                        {
+                            appearances = 0;
+                        }
+                        sb.Append("-" + word + ":\t" + appearances + "\n");
+                    }
+                    tip.SetToolTip(l, sb.ToString());
+                    lbl_intro.Text = s.ReadLine();
+                    lbl_intro.Location = new System.Drawing.Point(0, 30);
+                    lbl_intro.Size = new Size(784, 30);
+                    p.Controls.Add(l);
+                    p.Controls.Add(lbl_intro);
+                    panel2.Controls.Add(p);
+                }
             }
         }
 
@@ -397,6 +441,19 @@ namespace Information_Retrieval
         private void יציאהToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void מדריךשימושToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form3 form3 = new Form3();
+            form3.ShowDialog();
+
+
+        }
+        private void מחיקתקובץמןמאגרהנתוניםToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form4 form4 = new Form4(conn);
+            form4.ShowDialog();
         }
     }
 }

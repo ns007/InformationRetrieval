@@ -39,3 +39,5 @@ C:\Users\netanel\Source\Repos\InformationRetrieval\Information Retrieval\bin\Deb
 C:\Users\netanel\Source\Repos\InformationRetrieval\Information Retrieval\bin\Debug\Information Retrieval.pdb
 C:\Users\netanel\Source\Repos\InformationRetrieval\Information Retrieval\bin\Debug\MySql.Data.dll
 C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Form2.resources
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Form3.resources
+C:\Users\ysapir\Source\Repos\InformationRetrieval\Information Retrieval\obj\Debug\Information_Retrieval.Form4.resources

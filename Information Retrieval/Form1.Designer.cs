@@ -33,14 +33,16 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.קובץToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.קליטתקובץלמאגרהנתוניםToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.מחיקתקובץמןמאגרהנתוניםToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.יציאהToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.עזרהToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.אודותToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.מדריךשימושToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btn_search = new System.Windows.Forms.Button();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.lbl_msg = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.יציאהToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -84,32 +86,55 @@
             // 
             this.קובץToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.קליטתקובץלמאגרהנתוניםToolStripMenuItem,
+            this.מחיקתקובץמןמאגרהנתוניםToolStripMenuItem,
             this.יציאהToolStripMenuItem});
             this.קובץToolStripMenuItem.Name = "קובץToolStripMenuItem";
-            this.קובץToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.קובץToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.קובץToolStripMenuItem.Text = "קובץ";
             // 
             // קליטתקובץלמאגרהנתוניםToolStripMenuItem
             // 
             this.קליטתקובץלמאגרהנתוניםToolStripMenuItem.Name = "קליטתקובץלמאגרהנתוניםToolStripMenuItem";
-            this.קליטתקובץלמאגרהנתוניםToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.קליטתקובץלמאגרהנתוניםToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.קליטתקובץלמאגרהנתוניםToolStripMenuItem.Text = "קליטת קובץ למאגר הנתונים";
             this.קליטתקובץלמאגרהנתוניםToolStripMenuItem.Click += new System.EventHandler(this.קליטתקובץלמאגרהנתוניםToolStripMenuItem_Click);
+            // 
+            // מחיקתקובץמןמאגרהנתוניםToolStripMenuItem
+            // 
+            this.מחיקתקובץמןמאגרהנתוניםToolStripMenuItem.Name = "מחיקתקובץמןמאגרהנתוניםToolStripMenuItem";
+            this.מחיקתקובץמןמאגרהנתוניםToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.מחיקתקובץמןמאגרהנתוניםToolStripMenuItem.Text = "מחיקת קובץ מן מאגר הנתונים";
+            this.מחיקתקובץמןמאגרהנתוניםToolStripMenuItem.Click += new System.EventHandler(this.מחיקתקובץמןמאגרהנתוניםToolStripMenuItem_Click);
+            // 
+            // יציאהToolStripMenuItem
+            // 
+            this.יציאהToolStripMenuItem.Name = "יציאהToolStripMenuItem";
+            this.יציאהToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.יציאהToolStripMenuItem.Text = "יציאה";
+            this.יציאהToolStripMenuItem.Click += new System.EventHandler(this.יציאהToolStripMenuItem_Click);
             // 
             // עזרהToolStripMenuItem
             // 
             this.עזרהToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.אודותToolStripMenuItem});
+            this.אודותToolStripMenuItem,
+            this.מדריךשימושToolStripMenuItem});
             this.עזרהToolStripMenuItem.Name = "עזרהToolStripMenuItem";
-            this.עזרהToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.עזרהToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.עזרהToolStripMenuItem.Text = "עזרה";
             // 
             // אודותToolStripMenuItem
             // 
             this.אודותToolStripMenuItem.Name = "אודותToolStripMenuItem";
-            this.אודותToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.אודותToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.אודותToolStripMenuItem.Text = "אודות";
             this.אודותToolStripMenuItem.Click += new System.EventHandler(this.אודותToolStripMenuItem_Click);
+            // 
+            // מדריךשימושToolStripMenuItem
+            // 
+            this.מדריךשימושToolStripMenuItem.Name = "מדריךשימושToolStripMenuItem";
+            this.מדריךשימושToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.מדריךשימושToolStripMenuItem.Text = "מדריך למשתמש";
+            this.מדריךשימושToolStripMenuItem.Click += new System.EventHandler(this.מדריךשימושToolStripMenuItem_Click);
             // 
             // groupBox1
             // 
@@ -146,7 +171,7 @@
             // lbl_msg
             // 
             this.lbl_msg.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lbl_msg.Location = new System.Drawing.Point(0, 435);
+            this.lbl_msg.Location = new System.Drawing.Point(0, 436);
             this.lbl_msg.Name = "lbl_msg";
             this.lbl_msg.Size = new System.Drawing.Size(784, 26);
             this.lbl_msg.TabIndex = 3;
@@ -159,19 +184,12 @@
             this.panel2.Size = new System.Drawing.Size(784, 285);
             this.panel2.TabIndex = 4;
             // 
-            // יציאהToolStripMenuItem
-            // 
-            this.יציאהToolStripMenuItem.Name = "יציאהToolStripMenuItem";
-            this.יציאהToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.יציאהToolStripMenuItem.Text = "יציאה";
-            this.יציאהToolStripMenuItem.Click += new System.EventHandler(this.יציאהToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(784, 462);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.lbl_msg);
             this.Controls.Add(this.groupBox1);
@@ -182,7 +200,7 @@
             this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "מסך הבית";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -209,6 +227,8 @@
         private System.Windows.Forms.ToolStripMenuItem אודותToolStripMenuItem;
         private System.Windows.Forms.FlowLayoutPanel panel2;
         private System.Windows.Forms.ToolStripMenuItem יציאהToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem מדריךשימושToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem מחיקתקובץמןמאגרהנתוניםToolStripMenuItem;
     }
 }
 
