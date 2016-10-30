@@ -33,6 +33,8 @@
             this.dgv_files = new System.Windows.Forms.DataGridView();
             this.מזהה = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_files)).BeginInit();
@@ -60,13 +62,18 @@
             // 
             // dgv_files
             // 
+            this.dgv_files.AllowUserToAddRows = false;
+            this.dgv_files.AllowUserToDeleteRows = false;
             this.dgv_files.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_files.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.מזהה,
             this.Column1,
+            this.Column3,
+            this.Column4,
             this.Column2});
             this.dgv_files.Location = new System.Drawing.Point(12, 103);
             this.dgv_files.Name = "dgv_files";
+            this.dgv_files.ReadOnly = true;
             this.dgv_files.Size = new System.Drawing.Size(760, 330);
             this.dgv_files.TabIndex = 2;
             this.dgv_files.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_files_CellContentClick);
@@ -81,6 +88,16 @@
             // 
             this.Column1.HeaderText = "שם הקובץ";
             this.Column1.Name = "Column1";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "ספר";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "פרק";
+            this.Column4.Name = "Column4";
             // 
             // Column2
             // 
@@ -97,6 +114,7 @@
             this.Controls.Add(this.dgv_files);
             this.Controls.Add(this.panel1);
             this.Name = "Form4";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form4";
             this.Load += new System.EventHandler(this.Form4_Load);
             this.panel1.ResumeLayout(false);
@@ -113,6 +131,8 @@
         private System.Windows.Forms.DataGridView dgv_files;
         private System.Windows.Forms.DataGridViewTextBoxColumn מזהה;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewButtonColumn Column2;
     }
 }

@@ -20,11 +20,12 @@ namespace Information_Retrieval
 
         private MySqlConnection conn = DbConn.connect_to_MySQL();
         //int x = 3; 
-
+        private bool isAdmmin;
+        private LoginForm loginForm;
         ISet<string> operands = new HashSet<string>();
         ISet<string> notOperands = new HashSet<string>();
         ISet<string> stopList = new HashSet<string>();
-        public Form1()
+        public Form1(bool isAdmmin, LoginForm loginForm)
         {
             InitializeComponent();
             operands.Add("AND");
@@ -41,11 +42,17 @@ namespace Information_Retrieval
             stopList.Add("an");
             stopList.Add("like");
             stopList.Add("as");
+            this.isAdmmin = isAdmmin;
+            this.loginForm = loginForm;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            if (!isAdmmin)
+            {
+                קליטתקובץלמאגרהנתוניםToolStripMenuItem.Visible = false;
+                מחיקתקובץמןמאגרהנתוניםToolStripMenuItem.Visible = false;
+            }
         }
 
         private void אודותToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,25 +68,30 @@ namespace Information_Retrieval
             // Set filter options and filter index.
             openFileDialog1.Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
-            openFileDialog1.Multiselect = false;
+            openFileDialog1.Multiselect = true;
 
             // Process input if the user clicked OK.
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 // Open the selected file to read.
-                fileName = Path.GetFileName(openFileDialog1.FileName);
-                filePath = openFileDialog1.FileName;
-                File.Copy(filePath, dicName + fileName);
-                System.IO.Stream fileStream = openFileDialog1.OpenFile();
-                using (System.IO.StreamReader reader = new System.IO.StreamReader(fileStream))
+                foreach(string s in openFileDialog1.FileNames)
                 {
-                    // Read the first line from the file and write it the textbox.
-                    fileText = reader.ReadToEnd();
-                    
+                    fileName = Path.GetFileName(s);
+                    filePath = s;
+                    File.Copy(filePath, dicName + fileName);
+                    System.IO.Stream fileStream = openFileDialog1.OpenFile();
+                    using (System.IO.StreamReader reader = new System.IO.StreamReader(fileStream))
+                    {
+                        // Read the first line from the file and write it the textbox.
+                        fileText = reader.ReadToEnd();
+
+                    }
+                    fileStream.Close();
+                    saveFileInDB(fileText, fileName);
                 }
-                fileStream.Close();
+                MessageBox.Show("הקבצים נקלטו בהצלחה");
             }
-            saveFileInDB(fileText, fileName);
+            
         }
 
         private void saveFileInDB(string fileText , string fileName)
@@ -88,15 +100,11 @@ namespace Information_Retrieval
             MySqlCommand cmd;
             if (conn != null)
             {
-                //conn.Open();
-                //string text = System.IO.File.ReadAllText(@"C:\Users\netanels\Desktop\לימודים\פרויקט איחזור מידע\DOCS\Daniel7.txt");
                 char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n', ';', '?' ,'\r' };
 
                 List<string> words = new List<string>();
                 words = fileText.ToLower().Split(delimiterChars).ToList<string>();
 
-                //MessageBox.Show(words[21].ToString());
-                //words.Remove(" ");
                 int fileID = GetFileID(conn,fileName);
                 Dictionary<string, int> dictionary = new Dictionary<string, int>();
                 foreach (string word in words)
@@ -201,7 +209,7 @@ namespace Information_Retrieval
                 //{
                 //    conn.Close();
                 //}
-                MessageBox.Show("קובץ נקלט בהצלחה");
+                //MessageBox.Show("קובץ נקלט בהצלחה");
                 //StringHelper z = new StringHelper();
             }
             else
@@ -228,8 +236,10 @@ namespace Information_Retrieval
                 }
                 else
                 {
+                    string[] splitedFileName = fileName.Split(' ');
                     reader.Close();
-                    queryString = "INSERT INTO info_retrieval_db.files (filename) VALUES" + "('" + fileName + "');";
+                    queryString = "INSERT INTO info_retrieval_db.files (filename, book, chapter,active) VALUES" + "('" + fileName + "','" + 
+                        splitedFileName[0] + "'," + Int32.Parse(splitedFileName[1].Replace(".txt","")) + ",TRUE);";
                     try
                     {
                         //conn.Open();
@@ -454,6 +464,13 @@ namespace Information_Retrieval
         {
             Form4 form4 = new Form4(conn);
             form4.ShowDialog();
+        }
+
+        private void התנתקToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            loginForm.clearUser();
+            loginForm.Visible = true;
         }
     }
 }

@@ -43,6 +43,7 @@
             this.txt_search = new System.Windows.Forms.TextBox();
             this.lbl_msg = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.התנתקToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -87,6 +88,7 @@
             this.קובץToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.קליטתקובץלמאגרהנתוניםToolStripMenuItem,
             this.מחיקתקובץמןמאגרהנתוניםToolStripMenuItem,
+            this.התנתקToolStripMenuItem,
             this.יציאהToolStripMenuItem});
             this.קובץToolStripMenuItem.Name = "קובץToolStripMenuItem";
             this.קובץToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -184,6 +186,13 @@
             this.panel2.Size = new System.Drawing.Size(784, 285);
             this.panel2.TabIndex = 4;
             // 
+            // התנתקToolStripMenuItem
+            // 
+            this.התנתקToolStripMenuItem.Name = "התנתקToolStripMenuItem";
+            this.התנתקToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.התנתקToolStripMenuItem.Text = "התנתק";
+            this.התנתקToolStripMenuItem.Click += new System.EventHandler(this.התנתקToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -229,6 +238,7 @@
         private System.Windows.Forms.ToolStripMenuItem יציאהToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem מדריךשימושToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem מחיקתקובץמןמאגרהנתוניםToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem התנתקToolStripMenuItem;
     }
 }
 

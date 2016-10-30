@@ -40,7 +40,9 @@ namespace Information_Retrieval
                     dgv_files.Rows.Add(dr);
                     dgv_files[0, irow].Value = reader["id"].ToString();
                     dgv_files[1, irow].Value = reader["filename"].ToString();
-                    dgv_files[2, irow].Value = reader["active"].ToString();
+                    dgv_files[2, irow].Value = reader["book"].ToString();
+                    dgv_files[3, irow].Value = reader["chapter"].ToString();
+                    dgv_files[4, irow].Value = reader["active"].ToString();
                     irow++;
                 }
                 reader.Close();
@@ -56,8 +58,8 @@ namespace Information_Retrieval
             {
                 int  key = Int32.Parse(dgv_files[0, e.RowIndex].Value.ToString());
                 //שאליתא לעדכון 
-                dgv_files[2, e.RowIndex].Value = dgv_files[2, e.RowIndex].Value.ToString().Equals("True") ? "False" : "True";
-                string queryString = "update info_retrieval_db.files set active="+ dgv_files[2, e.RowIndex].Value + " where id="+key+ ";";
+                dgv_files[4, e.RowIndex].Value = dgv_files[4, e.RowIndex].Value.ToString().Equals("True") ? "False" : "True";
+                string queryString = "update info_retrieval_db.files set active="+ dgv_files[4, e.RowIndex].Value + " where id="+key+ ";";
                 cmd = new MySqlCommand(queryString, conn);
                 cmd.ExecuteNonQuery();
                 //TODO - Button Clicked - Execute Code Here
